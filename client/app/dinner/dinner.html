@@ -1,0 +1,42 @@
+
+
+
+           <accordion id="dinnerModal">
+              <accordion-group heading="Cook at home">
+                Suggest dish : <input></input>
+                <div ng-controller="CookathomeCtrl">
+                or pick from the usuals 
+                  <select>
+                    <option ng-repeat="cookAtHomeUsual in cookAtHomeUsuals | orderBy:'nameOfDish'">
+                      {{cookAtHomeUsual.nameOfDish}}
+                    </option>
+                  </select>
+                </div>
+                <button class="btn btn-default btn-sm">Send</button>
+
+                <br>
+                
+              </accordion-group>
+              <accordion-group heading="Order in">
+               
+              </accordion-group>
+              <accordion-group heading="Eat out">
+                Suggest place : <input></input><br>
+                <div ng-controller="EatoutCtrl"><br>
+                or pick from the usuals
+                	<select>
+                		<option ng-repeat="eatOutUsual in eatOutUsuals | orderBy:'nameOfPlace'">
+                			{{eatOutUsual.nameOfPlace}}
+                		</option>
+                	</select>
+                </div><br>
+                <button class="btn btn-default btn-sm">Send</button>
+            </accordion-group>
+            <accordion-group heading="Graze">
+              <p>The body of the accordion group grows to fit the contents</p>
+            </accordion-group>
+            <accordion-group heading="Find smth new from yelp">
+              <p>The body of the accordion group grows to fit the contents</p>
+            </accordion-group>
+          </accordion>
+  

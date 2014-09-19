@@ -1,0 +1,24 @@
+<header class="hero-unit" id="banner">
+  <div class="container" id="sw4dTitle">So What's for dinner ?
+  </div>
+</header>
+
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<br><br>
+<div ng-controller="CookathomeCtrl" class="col-md-12">
+Type in dish<br>
+<input type='text' ng-model="cookAtHomeDish" required />
+<!-- <button type="submit" ng-click="sendDish()" ui-sref="main">Submit</button> -->
+<button type="submit" ng-click="sendDish()">Submit</button><br>
+<button>Find something new on yelp</button>
+<br>
+<br>
+<div ng-repeat="cookAtHomeUsual in cookAtHomeUsuals">
+	<div class="glyphicon glyphicon-cutlery"> {{cookAtHomeUsual.nameOfDish}}</div>
+	<button type="button" ng-click="deleteThing(cookAtHomeUsual)">&times;</button>
+	<hr>
+</div>
+
+
+

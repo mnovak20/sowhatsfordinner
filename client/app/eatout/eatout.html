@@ -1,0 +1,38 @@
+<header class="hero-unit" id="banner">
+  <div class="container" id="sw4dTitle">So What's for dinner ?
+
+   <!--  <h1>'Allo, 'Allo!</h1>
+    <p class="lead">Kick-start your next web app with Angular Fullstack</p> -->
+    <!-- <img src="assets/images/yeoman.png" alt="I'm Yeoman"> -->
+  </div>
+</header>
+
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div ng-controller="EatoutCtrl" class="col-md-12">
+Type in name of restaurant<br>
+<input ng-model="nameOfPlace"><br>
+Type in address<br>
+<input ng-model="addressOfPlace"><br>
+Type in phonenumber<br>
+<input ng-model="phoneOfPlace"><br>
+URL<br>
+<input ng-model="website"><br>
+<!-- <button type="submit" ng-click="sendDish()" ui-sref="main">Submit</button> -->
+<button type="submit" ng-click="sendRestaurant()">Submit</button><br>
+<button>Find something new on yelp</button>
+
+
+<br>
+<br>
+<div ng-repeat="eatOutUsual in eatOutUsuals">
+	<span>
+	<div class="glyphicon glyphicon-cutlery"> {{eatOutUsual.nameOfPlace}}</div><br>
+
+		<div class="glyphicon glyphicon-globe"> {{eatOutUsual.addressOfPlace}}</div><br>
+		<div class="glyphicon glyphicon-earphone"> {{eatOutUsual.phoneOfPlace}}</div><br>
+		<div class="glyphicon glyphicon-home"> <a href="http://www.{{eatOutUsual.website}}">{{eatOutUsual.website}}</a></div>
+
+	<button type="button" ng-click="deleteThing(eatOutUsual)">&times;</button></span><br><br><br>
+	<hr>
+</div>
