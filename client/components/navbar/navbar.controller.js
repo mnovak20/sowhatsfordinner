@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('sowhatsfordinnerApp')
-  .controller('NavbarCtrl', function ($scope, $location, Auth) {
+  .controller('NavbarCtrl', function ($scope, $location, Auth, socket) {
     $scope.menu = [{
       'title': 'Home',
       'link': '/'
@@ -13,6 +13,12 @@ angular.module('sowhatsfordinnerApp')
     $scope.getCurrentUser = Auth.getCurrentUser;
 
     $scope.logout = function() {
+      var userName = Auth.getCurrentUser();
+      // console.log(userName);
+      // userName.$promise.then(function() {
+      // console.log("USER AFTER RESOLUTION: ", userName);
+      socket.socket.emit('logOutUser', userName.name);
+      // }
       Auth.logout();
       $location.path('/login');
     };

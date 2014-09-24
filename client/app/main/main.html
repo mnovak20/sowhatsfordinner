@@ -3,10 +3,6 @@
 
 <header class="hero-unit" id="banner">
   <div class="container" id="sw4dTitle">So What's for dinner ?
-
-   <!--  <h1>'Allo, 'Allo!</h1>
-    <p class="lead">Kick-start your next web app with Angular Fullstack</p> -->
-    <!-- <img src="assets/images/yeoman.png" alt="I'm Yeoman"> -->
   </div>
 </header>
 
@@ -17,26 +13,59 @@
   <div class="row">
     <div class="col-lg-12">
       
-      <span class="col-lg-3"><h3>Online Users</h3><br><br>User1<br>User2<br>
+      <span class="col-lg-3 col-md-3"><h3>Online Users</h3><br><br>
+        <div ng-repeat="(key,user) in activeUsers">
+            <div class="glyphicon glyphicon-ok-circle" style="color:#3f51b5"></div> {{key}}
+        </div>
+        <br><br>
         <button><a ui-sref="cookathome">Add usuals - cook at home</a></button>
         <button><a ui-sref="eatout">Add usuals - eat out</a></button>
       </span>
 
       <ul class=" nav nav-tabs nav-stacked col-md-9 col-lg-9 col-sm-6 chatMessage">
-        <li  ng-repeat="thing in awesomeThings | orderBy:'timeSent' | limitTo:10">
+        <li  ng-repeat="thing in awesomeThings | orderBy:'timeSent'">
           <button type="button" class="close" ng-click="deleteThing(thing)">&times;</button>
-          <a href="#" tooltip="{{thing.info}}"><img src="assets/images/yeoman.png" alt="I'm Yeoman">{{thing.currentUser}} : {{thing.message}}<br>{{thing.timeSent | date:'MM/dd/yyyy HH:mm'}}</a><hr> 
+          <a href="#" tooltip="{{thing.info}}"><img src="assets/images/cutlery.png">&nbsp&nbsp{{thing.currentUser}} : {{thing.message}}<br>{{thing.timeSent | date:'MM/dd/yyyy HH:mm'}}</a> 
           <div ng-if="thing.eatOutDetails || thing.cookAtHomeDetails || thing.orderInDetails">
-              <div class="panel panel-default">
-                <div class="panel-heading">
-                  Restautant Name
+                <div  ng-if="thing.dinnerType =='Eat out'">
+                  <div class="panel panel-default">
+                    <div class="panel-heading">
+                      We're going out to - {{thing.eatOutDetails.restName}}<div>{{thing.eatOutDetails.likes}} likes</div>
+                    </div>
+                    <div class="panel-body">
+                      <div class="glyphicon glyphicon-cutlery"></div>&nbsp{{thing.eatOutDetails.restName}}<br>
+                      <div class="glyphicon glyphicon-home"></div>&nbsp{{thing.eatOutDetails.restAddress}}<br>
+                      <div class="glyphicon glyphicon-earphone"></div>&nbsp{{thing.eatOutDetails.restPhone}}<br>
+                      <div class='glyphicon glyphicon-list-alt'></div>&nbsp<a href="http://www.{{thing.eatOutDetails.restWeb}}">{{thing.eatOutDetails.restWeb}}</a><br>
+                      <button class="btn btn-primary" ng-click="like(thing)">Like <span class=" glyphicon glyphicon-thumbs-up"></span> </button>
+                    </div>
+                  </div>
                 </div>
-                <div class="panel-body">
-                  {{thing.dinnerType.restName}} {{thing.dinnerType.likes}}
+                <div ng-if="thing.dinnerType =='Order in'">
+                  <div class="panel panel-default">
+                     <div class="panel-heading">
+                      We're ordering in from  - {{thing.orderInDetails.restName}}<div>{{thing.orderInDetails.likes}} likes</div>
+                    </div>
+                    <div class="panel-body">
+                      <div class="glyphicon glyphicon-cutlery"></div>&nbsp{{thing.orderInDetails.restName}}<br>
+                      <div class="glyphicon glyphicon-home"></div>&nbsp{{thing.orderInDetails.restAddress}}<br>
+                      <div class="glyphicon glyphicon-earphone"></div>&nbsp{{thing.orderInDetails.restPhone}}<br>
+                      <div class='glyphicon glyphicon-list-alt'></div><a href="http://www.{{thing.orderInDetails.restWeb}}">&nbsp{{thing.orderInDetails.restWeb}}</a><br>
+                      <button class="btn btn-primary" ng-click="like(thing)">Like <span class=" glyphicon glyphicon-thumbs-up"></span> </button>
+                    </div>
+                  </div>
                 </div>
-                
-                <button class="btn btn-primary" ng-click="like(thing)">Like <span class=" glyphicon glyphicon-thumbs-up"></span> </button>
-              </div>
+                <div ng-if="thing.dinnerType =='Cook at home'">
+                  <div class="panel panel-default">
+                    <div class="panel-heading">
+                      We're having - {{thing.cookAtHomeDetails.nameOfDish}}<div>{{thing.cookAtHomeDetails.likes}} likes</div>
+                    </div>
+                    <div class="panel-body">
+                      {{thing.cookAtHomeDetails.restName}}<br>
+                      <button class="btn btn-primary" ng-click="like(thing)">Like <span class=" glyphicon glyphicon-thumbs-up"></span> </button>
+                    </div>
+                  </div>
+                </div>               
           </div> 
         </li>
        
@@ -50,7 +79,7 @@
     <button class="btn btn-default chatButton" id="sw4d" ng-click="sw4d()">So what's for dinner?</button>
 
     <div class="btn-group">
-          <button id="suggestDinner" class=" chatButton btn btn-primary">Suggest dinner</button>
+          <button id="suggestDinner" class="chatButton btn btn-primary" ng-click="openModal()" >Suggest dinner</button>
     </div>
 
 
@@ -76,7 +105,7 @@
 
     <br><br><br>
     <p class="input-group">
-      <input type="text" class="form-control" placeholder="Your message goes here." ng-model="newThing" id="chatField">
+      <input type="text" class="form-control" placeholder="Your message goes here." ng-model="newThing" id="chatField" required>
       <span class="input-group-btn">
         <button type="submit" class="btn btn-primary" ng-click="addThing()">Send</button>
       </span>
@@ -91,3 +120,65 @@
          <a href="https://github.com/DaftMonk/generator-angular-fullstack/issues?state=open">Issues</a></p>
   </div>
 </footer>
+
+
+<script type="text/ng-template" id="dinnerModal.html">
+           <h3>Suggest tonight's dinner!</h3>      
+           <accordion id="dinnerModal">
+              <accordion-group heading="Cook at home">
+                Suggest dish :
+                <input ng-model="suggestedDish.val"></input>
+                  <!--  {{suggestedDishUsual.val}} -->
+                   <br>
+                    or pick from your group's usuals :
+                  <select ng-model="suggestedDishUsual.val">
+                    <option ng-repeat="cookAtHomeUsual in cookAtHomeUsuals | orderBy:'nameOfDish'">{{cookAtHomeUsual.nameOfDish}}</option>
+                  </select> 
+                  <br>        
+                <button class="btn btn-default btn-sm" ng-click="sendCookAtHome()">Send</button>
+                <br>
+              </accordion-group>
+              <accordion-group heading="Order in">
+                Suggest restaurant : <input ng-model="suggestedOrderIn.val"></input><br>
+                Restaurant address : <input ng-model="suggestedOrderIn.address"></input><br>
+                Restaurant phone#  : <input ng-model="suggestedOrderIn.phone"></input><br>
+                Restaurant website : <input ng-model="suggestedOrderIn.website"></input><br>
+                <div><br>
+                or pick from your group's usuals
+                  <select ng-model="suggestedOrderInUsual.val">
+                    <option ng-repeat="orderInUsual in orderInUsuals">{{orderInUsual.nameOfPlace}}</option>
+                  </select>
+                </div><br>
+                <button class="btn btn-default btn-sm" ng-click="sendOrderIn()">Send</button>
+               
+              </accordion-group>
+              <accordion-group heading="Eat out">
+             
+                Suggest restaurant : <input ng-model="suggestedEatOut.val"></input><br>
+                Restaurant address : <input ng-model="suggestedEatOut.address"></input><br>
+                Restaurant phone#  : <input ng-model="suggestedEatOut.phone"></input><br>
+                Restaurant website : <input ng-model="suggestedEatOut.website"></input><br>
+                <div><br>
+                or pick from your group's usuals
+                  <select ng-model="suggestedEatOutUsual.val">
+                    <option ng-repeat="eatOutUsual in eatOutUsuals">{{eatOutUsual.nameOfPlace}}</option>
+                  </select>
+                </div><br>
+                <button class="btn btn-default btn-sm" ng-click="sendEatOut()">Send</button>
+            </accordion-group>
+            <accordion-group heading="Graze">
+              Are you sure? 
+              <br>
+              <div class="btn-group">
+                <button type="button" class="btn btn-primary">Yes</button>
+                <button type="button" class="btn btn-danger">No</button>
+
+              </div>
+            </accordion-group>
+            <accordion-group heading="Find smth new from yelp">
+              <p>The body of the accordion group grows to fit the contents</p>
+            </accordion-group>
+          </accordion>
+          <button class="btn btn-danger" ng-click="cancel()">Close</button>
+
+</script>

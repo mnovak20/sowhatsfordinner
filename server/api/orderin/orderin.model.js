@@ -6,7 +6,8 @@ var mongoose = require('mongoose'),
 var OrderinSchema = new Schema({
   nameOfPlace: String,
   addressOfPlace: String,
-  phoneOfPlace: String
+  phoneOfPlace: String,
+  website: String
 });
 
 module.exports = mongoose.model('Orderin', OrderinSchema);

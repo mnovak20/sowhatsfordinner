@@ -16,7 +16,7 @@ angular.module('sowhatsfordinnerApp')
     $http.get('/api/eatouts').success(function(eatOutUsuals) {
     	
       $scope.eatOutUsuals = eatOutUsuals;
-      console.log($scope.eatOutUsuals);
+      // console.log("this is $scope.eatOutUsuals: ", $scope.eatOutUsuals);
       socket.syncUpdates('eatout', $scope.eatOutUsuals);
       //eatoute is the database name
     });

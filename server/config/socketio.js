@@ -4,6 +4,10 @@
 
 'use strict';
 
+var users = {};
+
+var usersToSockets = {};
+
 var config = require('./environment');
 
 // When the user disconnects.. perform this
@@ -18,6 +22,7 @@ function onConnect(socket) {
   });
 
   // Insert sockets below
+  require('../api/activeUser/activeUser.socket').register(socket);
   require('../api/cookathome/cookathome.socket').register(socket);
   require('../api/orderin/orderin.socket').register(socket);
   require('../api/eatout/eatout.socket').register(socket);
@@ -49,17 +54,48 @@ module.exports = function (socketio) {
 
     socket.connectedAt = new Date();
 
+    socket.on('logOutUser', function(data){
+        var goneUser = data;
+        delete users[goneUser];
+        console.log(users);
+        socket.emit('activeUsers', users);
+        socket.broadcast.emit('activeUsers', users);
+      });
+
+
+
     // Call onDisconnect.
     socket.on('disconnect', function () {
       onDisconnect(socket);
-      console.info('[%s] DISCONNECTED', socket.address);
+      console.info('[%s] DISCONNECTED', socket.client.id);
+      for (var key in users){
+        if(users[key] === socket.client.id){
+          delete users[key];
+          console.log(users);
+          socket.emit('activeUsers', users);
+          socket.broadcast.emit('activeUsers', users);
+        }
+      }
+
+    });
+
+    socket.on("getUsers", function() {
+      socket.emit('activeUsers', users);
+      socket.broadcast.emit('activeUsers', users);
     });
 
     // Call onConnect.
     onConnect(socket);
     console.info('[%s] CONNECTED', socket.address);
     socket.on('currentUser', function(data){
-      console.log(data);
+      // socket.client.id.push(user);
+      var newUser = data;
+      users[newUser] = socket.client.id;
+      console.log(users);
+      socket.emit('activeUsers', users);
+      socket.broadcast.emit('activeUsers', users);
     });
+    // console.log(socket.client.id);
+    // console.log(socket.conn.server.clients);
   });
 };
