@@ -31,6 +31,61 @@
     border-top: 1px solid #E5E5E5;
 }
 
+.like-button{
+    margin-right: 7%;
+    float: right;
+    background-color:#3f51b5 !important;
+    border-color: #3f51b5 !important;
+}
+
+
+.dinners{
+    margin-left: 25%;
+}
+.likes{
+    float: right;
+    margin-right: 8%;
+    color: white;
+}
+
+.graze{
+    margin-left: 38%;
+}
+
+.accTitle{
+    background-color: white !important;
+}
+
+.abc{
+    color: white ;
+}
+
+
+.modalClose{
+    display: inline-block;
+    margin-left: 88%;
+    margin-bottom: 2%;
+}
+
+.dinnerTitle{
+    color: white;
+}
+
+.ph{
+    background-color: #3f51b5 !important;
+}
+
+
+
+
+.dinnerTitle{
+    color: white !important;
+}
+
+.modalTitle{
+    margin-left: 25%;
+}
+
 
 #chatField{
     width: 73%;
@@ -47,18 +102,27 @@ display: inline;
 
 #sw4d{
     margin-left: 40%;
-    background-color: #3DCB97;
+    background-color: #ff4081;
+    border-color:#ff4081;
     color: white;
 
 }
 
 #suggestDinner{
     margin-left: 80%;
+    background-color:#3f51b5 !important;
+    border-color: #3f51b5 !important;
+}
+
+.sender{
+    background-color:#3f51b5 !important;
+    border-color: #3f51b5 !important;
 }
 
 #sw4dTitle{
+    margin-top: 10px;
     font-size: 38px;
-    font-family: 'Parisienne', cursive;
+    font-family: 'Dancing Script', cursive;
 
 }
 

@@ -1,13 +1,14 @@
 
 
 
-<header class="hero-unit" id="banner">
-  <div class="container" id="sw4dTitle">So What's for dinner ?
-  </div>
-</header>
+
 
 <div ng-include="'components/navbar/navbar.html'"></div>
 
+<!-- <header class="hero-unit" id="banner">
+  <div class="container" id="sw4dTitle">So What's for dinner ?
+  </div>
+</header> -->
 
 <div class="container">
   <div class="row">
@@ -15,54 +16,79 @@
       
       <span class="col-lg-3 col-md-3"><h3>Online Users</h3><br><br>
         <div ng-repeat="(key,user) in activeUsers">
-            <div class="glyphicon glyphicon-ok-circle" style="color:#3f51b5"></div> {{key}}
+            <div class="glyphicon glyphicon-ok-circle" style="color:#ff4081"></div> {{key}}
         </div>
         <br><br>
-        <button><a ui-sref="cookathome">Add usuals - cook at home</a></button>
-        <button><a ui-sref="eatout">Add usuals - eat out</a></button>
+        <!-- <button><a ui-sref="cookathome">Add usuals - cook at home</a></button>
+        <button><a ui-sref="eatout">Add usuals - eat out</a></button> -->
       </span>
 
       <ul class=" nav nav-tabs nav-stacked col-md-9 col-lg-9 col-sm-6 chatMessage">
         <li  ng-repeat="thing in awesomeThings | orderBy:'timeSent'">
           <button type="button" class="close" ng-click="deleteThing(thing)">&times;</button>
           <a href="#" tooltip="{{thing.info}}"><img src="assets/images/cutlery.png">&nbsp&nbsp{{thing.currentUser}} : {{thing.message}}<br>{{thing.timeSent | date:'MM/dd/yyyy HH:mm'}}</a> 
-          <div ng-if="thing.eatOutDetails || thing.cookAtHomeDetails || thing.orderInDetails">
+          <div ng-if="thing.eatOutDetails || thing.cookAtHomeDetails || thing.orderInDetails || thing.dinnerType == 'graze'">
                 <div  ng-if="thing.dinnerType =='Eat out'">
                   <div class="panel panel-default">
-                    <div class="panel-heading">
-                      We're going out to - {{thing.eatOutDetails.restName}}<div>{{thing.eatOutDetails.likes}} likes</div>
+                    <div class="panel-heading ph">
+                      <div class="dinners">
+                        <h4 class="dinnerTitle"><div class="glyphicon glyphicon-info-sign"></div>&nbspWe're having dinner at {{thing.eatOutDetails.restName}}.
+                        <div class="likes">{{thing.eatOutDetails.likes}} likes</div></h4>
+                      </div>
                     </div>
                     <div class="panel-body">
-                      <div class="glyphicon glyphicon-cutlery"></div>&nbsp{{thing.eatOutDetails.restName}}<br>
-                      <div class="glyphicon glyphicon-home"></div>&nbsp{{thing.eatOutDetails.restAddress}}<br>
-                      <div class="glyphicon glyphicon-earphone"></div>&nbsp{{thing.eatOutDetails.restPhone}}<br>
-                      <div class='glyphicon glyphicon-list-alt'></div>&nbsp<a href="http://www.{{thing.eatOutDetails.restWeb}}">{{thing.eatOutDetails.restWeb}}</a><br>
-                      <button class="btn btn-primary" ng-click="like(thing)">Like <span class=" glyphicon glyphicon-thumbs-up"></span> </button>
+                      <div class="dinners">
+                        <div class="glyphicon glyphicon-cutlery"></div>&nbsp{{thing.eatOutDetails.restName}}<br>
+                        <div class="glyphicon glyphicon-home"></div>&nbsp{{thing.eatOutDetails.restAddress}}<br>
+                        <div class="glyphicon glyphicon-earphone"></div>&nbsp{{thing.eatOutDetails.restPhone}}<br>
+                        <div class='glyphicon glyphicon-list-alt'></div>&nbsp<a href="http://www.{{thing.eatOutDetails.restWeb}}">{{thing.eatOutDetails.restWeb}}</a>
+                        <button class="btn btn-primary like-button" ng-click="like(thing)">Like <span class=" glyphicon glyphicon-thumbs-up"></span> </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div  ng-if="thing.dinnerType =='graze'">
+                  <div class="panel panel-default">
+                    <div class="panel-heading ph">
+                      <h4 class="dinnerTitle"> <div class="graze glyphicon glyphicon-info-sign"></div>&nbspGrazing</h4>
+                    </div>
+                    <div class="panel-body">
+                        <div class="dinners"><img src="assets/images/soupnazi.gif"></div>
                     </div>
                   </div>
                 </div>
                 <div ng-if="thing.dinnerType =='Order in'">
                   <div class="panel panel-default">
-                     <div class="panel-heading">
-                      We're ordering in from  - {{thing.orderInDetails.restName}}<div>{{thing.orderInDetails.likes}} likes</div>
+                     <div class="panel-heading ph">
+                      <div  class="dinners">
+                        <h4 class="dinnerTitle"><div class="glyphicon glyphicon-info-sign"></div>&nbspWe're ordering in from {{thing.orderInDetails.restName}}.
+                        <div class="likes">{{thing.orderInDetails.likes}} likes</div></h4>
+                      </div>
                     </div>
                     <div class="panel-body">
-                      <div class="glyphicon glyphicon-cutlery"></div>&nbsp{{thing.orderInDetails.restName}}<br>
-                      <div class="glyphicon glyphicon-home"></div>&nbsp{{thing.orderInDetails.restAddress}}<br>
-                      <div class="glyphicon glyphicon-earphone"></div>&nbsp{{thing.orderInDetails.restPhone}}<br>
-                      <div class='glyphicon glyphicon-list-alt'></div><a href="http://www.{{thing.orderInDetails.restWeb}}">&nbsp{{thing.orderInDetails.restWeb}}</a><br>
-                      <button class="btn btn-primary" ng-click="like(thing)">Like <span class=" glyphicon glyphicon-thumbs-up"></span> </button>
+                      <div class="dinners">
+                        <div class="glyphicon glyphicon-cutlery"></div>&nbsp{{thing.orderInDetails.restName}}<br>
+                        <div class="glyphicon glyphicon-home"></div>&nbsp{{thing.orderInDetails.restAddress}}<br>
+                        <div class="glyphicon glyphicon-earphone"></div>&nbsp{{thing.orderInDetails.restPhone}}<br>
+                        <div class='glyphicon glyphicon-list-alt'></div>&nbsp<a href="http://www.{{thing.orderInDetails.restWeb}}">{{thing.orderInDetails.restWeb}}</a>
+                        <button class="btn btn-primary like-button" ng-click="like(thing)">Like <span class=" glyphicon glyphicon-thumbs-up"></span> </button>
+                      </div>
                     </div>
                   </div>
                 </div>
                 <div ng-if="thing.dinnerType =='Cook at home'">
                   <div class="panel panel-default">
-                    <div class="panel-heading">
-                      We're having - {{thing.cookAtHomeDetails.nameOfDish}}<div>{{thing.cookAtHomeDetails.likes}} likes</div>
+                    <div class="panel-heading ph">
+                      <div class="dinners">
+                        <h4 class="dinnerTitle"><div class="glyphicon glyphicon-info-sign"></div>&nbspWe're having {{thing.cookAtHomeDetails.nameOfDish}} at home.
+                        <div class="likes">{{thing.cookAtHomeDetails.likes}} likes</div></h4>
+                      </div>
                     </div>
                     <div class="panel-body">
-                      {{thing.cookAtHomeDetails.restName}}<br>
-                      <button class="btn btn-primary" ng-click="like(thing)">Like <span class=" glyphicon glyphicon-thumbs-up"></span> </button>
+                      <div class="dinners">
+                        <div class="glyphicon glyphicon-cutlery"></div>&nbsp{{thing.cookAtHomeDetails.nameOfDish}}
+                        <button class="btn btn-primary like-button" ng-click="like(thing)">Like <span class=" glyphicon glyphicon-thumbs-up"></span> </button>
+                      </div>
                     </div>
                   </div>
                 </div>               
@@ -79,7 +105,7 @@
     <button class="btn btn-default chatButton" id="sw4d" ng-click="sw4d()">So what's for dinner?</button>
 
     <div class="btn-group">
-          <button id="suggestDinner" class="chatButton btn btn-primary" ng-click="openModal()" >Suggest dinner</button>
+          <button id="suggestDinner" class="chatButton btn btn-primary" ng-click="openModal()" >Set dinner plans</button>
     </div>
 
 
@@ -107,7 +133,7 @@
     <p class="input-group">
       <input type="text" class="form-control" placeholder="Your message goes here." ng-model="newThing" id="chatField" required>
       <span class="input-group-btn">
-        <button type="submit" class="btn btn-primary" ng-click="addThing()">Send</button>
+        <button type="submit" class="btn btn-primary sender" ng-click="addThing()">Send</button>
       </span>
     </p>
   </form>
@@ -123,7 +149,7 @@
 
 
 <script type="text/ng-template" id="dinnerModal.html">
-           <h3>Suggest tonight's dinner!</h3>      
+           <h3 class="modalTitle">Suggest tonight's dinner!</h3>      
            <accordion id="dinnerModal">
               <accordion-group heading="Cook at home">
                 Suggest dish :
@@ -138,7 +164,7 @@
                 <button class="btn btn-default btn-sm" ng-click="sendCookAtHome()">Send</button>
                 <br>
               </accordion-group>
-              <accordion-group heading="Order in">
+                <accordion-group heading='Order in'>
                 Suggest restaurant : <input ng-model="suggestedOrderIn.val"></input><br>
                 Restaurant address : <input ng-model="suggestedOrderIn.address"></input><br>
                 Restaurant phone#  : <input ng-model="suggestedOrderIn.phone"></input><br>
@@ -150,7 +176,6 @@
                   </select>
                 </div><br>
                 <button class="btn btn-default btn-sm" ng-click="sendOrderIn()">Send</button>
-               
               </accordion-group>
               <accordion-group heading="Eat out">
              
@@ -170,7 +195,7 @@
               Are you sure? 
               <br>
               <div class="btn-group">
-                <button type="button" class="btn btn-primary">Yes</button>
+                <button type="button" class="btn btn-primary" ng-click="sendGraze()">Yes</button>
                 <button type="button" class="btn btn-danger">No</button>
 
               </div>
@@ -179,6 +204,6 @@
               <p>The body of the accordion group grows to fit the contents</p>
             </accordion-group>
           </accordion>
-          <button class="btn btn-danger" ng-click="cancel()">Close</button>
+          <button class="btn btn-danger modalClose" ng-click="cancel()">Close</button>
 
 </script>

@@ -165,7 +165,7 @@ var DinnerInstanceCtrl = function ($scope, $modalInstance, $http, Auth) {
       }
     }
 
-      $scope.sendEatOut = function(){
+  $scope.sendEatOut = function(){
       var user = Auth.getCurrentUser();
     console.log($scope.eatOutUsuals.length);
       if($scope.suggestedEatOut.val){
@@ -198,6 +198,11 @@ var DinnerInstanceCtrl = function ($scope, $modalInstance, $http, Auth) {
       $scope.eatOutUsuals = eatOutUsuals;
       // console.log("this is $scope.eatOutUsuals:" , $scope.eatOutUsuals);
     });
+
+    $scope.sendGraze = function(){
+      var user = Auth.getCurrentUser();
+      $http.post('/api/things', { message: 'We\'re grazing tonight.', currentUser: user.name, timeSent: new Date(), dinnerType: 'graze'});
+    }
 
     $scope.sendOrderIn = function(){
       var user = Auth.getCurrentUser();
