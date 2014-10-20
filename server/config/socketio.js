@@ -22,7 +22,7 @@ function onConnect(socket) {
   });
 
   // Insert sockets below
-  require('../api/activeUser/activeUser.socket').register(socket);
+  // require('../api/activeUser/activeUser.socket').register(socket);
   require('../api/cookathome/cookathome.socket').register(socket);
   require('../api/orderin/orderin.socket').register(socket);
   require('../api/eatout/eatout.socket').register(socket);

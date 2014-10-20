@@ -26,7 +26,7 @@
       <ul class=" nav nav-tabs nav-stacked col-md-9 col-lg-9 col-sm-6 chatMessage">
         <li  ng-repeat="thing in awesomeThings | orderBy:'timeSent'">
           <button type="button" class="close" ng-click="deleteThing(thing)">&times;</button>
-          <a href="#" tooltip="{{thing.info}}"><img src="assets/images/cutlery.png">&nbsp&nbsp{{thing.currentUser}} : {{thing.message}}<br>{{thing.timeSent | date:'MM/dd/yyyy HH:mm'}}</a> 
+          <a href="#" tooltip="{{thing.info}}"><img src="assets/images/cutlery.png">&nbsp&nbsp{{thing.currentUser}} : {{thing.message}}<div class="time">{{thing.timeSent | date:'MM/dd/yyyy HH:mm'}}</div></a> 
           <div ng-if="thing.eatOutDetails || thing.cookAtHomeDetails || thing.orderInDetails || thing.dinnerType == 'graze'">
                 <div  ng-if="thing.dinnerType =='Eat out'">
                   <div class="panel panel-default">
